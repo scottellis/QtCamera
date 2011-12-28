@@ -26,14 +26,16 @@ protected:
 	void timerEvent(QTimerEvent *event);
 
 private:
-	void updateDisplay(Mat *frame);
+	void showImage(Mat *frame);
 
 	CaptureThread *m_captureThread;
 
 	Ui::QtCameraClass ui;
 
-	QMutex m_frameRateMutex;
+	QMutex m_grabFrameMutex;
+	QQueue <Mat> m_frameQueue;
 	int m_frameRateTimer;
+	int m_frameRefreshTimer;
 	QLabel *m_pStatus;
 	int m_frameCount;
 };

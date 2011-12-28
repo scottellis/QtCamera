@@ -18,6 +18,9 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	m_pStatus->setAlignment(Qt::AlignCenter | Qt::AlignLeft);
 	m_pStatus->setText("0.0 fps  ");
 	ui.statusBar->addPermanentWidget(m_pStatus);
+
+	ui.actionStop->setEnabled(false);
+	ui.actionStart->setEnabled(true);
 }
 
 QtCamera::~QtCamera()
@@ -28,8 +31,6 @@ QtCamera::~QtCamera()
 		delete m_captureThread;
 		m_captureThread = NULL;
 	}
-
-	killTimer(m_frameRateTimer);
 }
 
 void QtCamera::startVideo()
@@ -43,7 +44,10 @@ void QtCamera::startVideo()
 
 	if (m_captureThread->startCapture()) {
 		m_frameCount = 0;
-		m_frameRateTimer = startTimer(5000);
+		m_frameRateTimer = startTimer(3000);
+		m_frameRefreshTimer = startTimer(30);
+		ui.actionStart->setEnabled(false);
+		ui.actionStop->setEnabled(true);
 	}
 }
 
@@ -54,25 +58,50 @@ void QtCamera::stopVideo()
 	}
 
 	killTimer(m_frameRateTimer);
+	killTimer(m_frameRefreshTimer);
+
+	ui.actionStop->setEnabled(false);
+	ui.actionStart->setEnabled(true);
 }
 
 void QtCamera::setGrabFrame(Mat *grabFrame)
 {
-	//m_frameRateMutex.lock();
 	m_frameCount++;
-	//m_frameRateMutex.unlock();
+
+	if (m_grabFrameMutex.tryLock()) {
+		
+		if (m_frameQueue.empty())
+			m_frameQueue.enqueue(*grabFrame);
+
+		m_grabFrameMutex.unlock();
+	}
 }
 
 void QtCamera::timerEvent(QTimerEvent *event)
 {
-	QString fps;
-	double count;
-		
-	//m_frameRateMutex.lock();
-	count = m_frameCount;
-	m_frameCount = 0;
-	//m_frameRateMutex.unlock();
+	if (event->timerId() == m_frameRateTimer) {
+		QString fps;
+		double count = m_frameCount;
+		m_frameCount = 0;
+		fps.sprintf("%0.1lf fps  ", count / 3.0);
+		m_pStatus->setText(fps);		
+	}
+	else {
+		m_grabFrameMutex.lock();
+		if (m_frameQueue.empty()) {
+			m_grabFrameMutex.unlock();
+		}
+		else {
+			Mat frame = m_frameQueue.dequeue();
+			m_grabFrameMutex.unlock();
+			showImage(&frame);
+		}
+	}
+}
 
-	fps.sprintf("%0.1lf fps  ", count / 5.0);
-	m_pStatus->setText(fps);		
+void QtCamera::showImage(Mat *frame)
+{	
+	QImage img((const uchar*) frame->data, frame->cols, frame->rows, frame->step, QImage::Format_RGB888);		
+	QImage swappedImg = img.rgbSwapped();
+	ui.cameraView->setPixmap(QPixmap::fromImage(swappedImg));
 }
