@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>662</width>
-    <height>556</height>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionStart"/>
+   <addaction name="actionStop"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -75,10 +77,22 @@
    <property name="text">
     <string>Start</string>
    </property>
+   <property name="toolTip">
+    <string>Start streaming video</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
+   </property>
+   <property name="toolTip">
+    <string>Stop video streaming</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
