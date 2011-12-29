@@ -101,6 +101,9 @@ void QtCamera::timerEvent(QTimerEvent *event)
 
 void QtCamera::showImage(Mat *frame)
 {	
+	if (isMinimized()) 
+		return;
+	
 	QImage img((const uchar*) frame->data, frame->cols, frame->rows, frame->step, QImage::Format_RGB888);		
 	QImage swappedImg = img.rgbSwapped();
 	ui.cameraView->setPixmap(QPixmap::fromImage(swappedImg));
