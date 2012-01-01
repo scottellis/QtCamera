@@ -104,6 +104,7 @@ void QtCamera::startVideo()
 void QtCamera::stopVideo()
 {
 	if (m_captureThread) {
+		disconnect(m_captureThread, SIGNAL(newImage(Mat *)), this, SLOT(newImage(Mat *)));
 		m_captureThread->stopCapture();			
 	}
 
