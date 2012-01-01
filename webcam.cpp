@@ -2,7 +2,6 @@
 
 WebCam::WebCam()
 {
-	m_device = 0;
 }
 
 WebCam::~WebCam()
@@ -10,12 +9,12 @@ WebCam::~WebCam()
 	close();
 }
 
-bool WebCam::open()
+bool WebCam::open(int device)
 {
 	if (m_vidcap.isOpened())
 		return true;
 
-    if (!m_vidcap.open(m_device))
+    if (!m_vidcap.open(device))
 		return false;
 
 	return true;
@@ -39,7 +38,7 @@ bool WebCam::getNextFrame(Mat *grab)
 
 	m_vidcap >> *grab;	
 
-	return true;
+	return !grab->empty();
 }
 
 // Always fixed using OpenCV interface to USB webcams

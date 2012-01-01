@@ -13,7 +13,7 @@ public:
 	Camera() {}
 	virtual ~Camera() {}
 
-	virtual bool open() = 0;
+	virtual bool open(int device) = 0;
 	virtual void close() = 0;
 	virtual bool isOpen() = 0;
 	virtual bool startCapture() { return true; }

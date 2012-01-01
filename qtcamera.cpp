@@ -75,7 +75,7 @@ void QtCamera::startVideo()
 			return;
 	}
 
-	if (!m_camera->open()) {
+	if (!m_camera->open(0)) {
 		delete m_camera;
 		m_camera = NULL;
 		return;

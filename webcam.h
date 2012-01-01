@@ -12,14 +12,13 @@ public:
 	WebCam();
 	virtual ~WebCam();
 
-	virtual bool open();
+	virtual bool open(int device);
 	virtual void close();
 	virtual bool isOpen();
 	virtual bool getNextFrame(Mat *grab);
 	virtual QSize getImageSize();
 
 private:
-	int m_device;
 	VideoCapture m_vidcap;
 };
 
