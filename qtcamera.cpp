@@ -14,7 +14,6 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	m_captureThread = NULL;
 	m_frameRateTimer = 0;
 	m_camera = NULL;
-	m_nonImgClientHeight = 0;
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionStart, SIGNAL(triggered()), this, SLOT(startVideo()));
@@ -151,14 +150,6 @@ void QtCamera::timerEvent(QTimerEvent *event)
 			delete frame;
 		}
 	}
-}
-
-void QtCamera::resizeEvent(QResizeEvent *event)
-{
-	if (m_nonImgClientHeight == 0)
-		m_nonImgClientHeight = ui.mainToolBar->height() + ui.statusBar->height();
-
-	ui.cameraView->resize(size().width(), size().height() - m_nonImgClientHeight);
 }
 
 void QtCamera::showImage(Mat *frame)

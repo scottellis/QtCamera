@@ -28,7 +28,6 @@ public slots:
 		
 protected:
 	void timerEvent(QTimerEvent *event);
-	void resizeEvent(QResizeEvent *event);
 
 private:
 	void showImage(Mat *frame);
@@ -43,7 +42,6 @@ private:
 	int m_frameRateTimer;
 	int m_frameRefreshTimer;
 	QLabel *m_pStatus;
-	int m_nonImgClientHeight;
 	int m_frameCount;
 	bool m_scaling;
 };
