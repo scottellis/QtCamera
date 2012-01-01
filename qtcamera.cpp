@@ -13,6 +13,7 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	m_frameCount = 0;
 	m_captureThread = NULL;
 	m_frameRateTimer = 0;
+	m_frameRefreshTimer = 0;
 	m_camera = NULL;
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -107,8 +108,15 @@ void QtCamera::stopVideo()
 		m_captureThread->stopCapture();			
 	}
 
-	killTimer(m_frameRateTimer);
-	killTimer(m_frameRefreshTimer);
+	if (m_frameRateTimer) {
+		killTimer(m_frameRateTimer);
+		m_frameRateTimer = 0;
+	}
+
+	if (m_frameRefreshTimer) {
+		killTimer(m_frameRefreshTimer);
+		m_frameRefreshTimer = 0;
+	}
 
 	ui.actionStop->setEnabled(false);
 	ui.actionStart->setEnabled(true);
