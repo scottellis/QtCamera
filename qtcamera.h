@@ -9,6 +9,9 @@ using namespace cv;
 
 class Camera;
 class CaptureThread;
+class QGLCanvas;
+
+//#define USING_OPENGL
 
 class QtCamera : public QMainWindow
 {
@@ -44,7 +47,12 @@ private:
 	QLabel *m_pStatus;
 	int m_frameCount;
 	bool m_scaling;
+
+#ifdef USING_OPENGL
+	QGLCanvas *m_cameraView;
+#else
 	QLabel *m_cameraView;
+#endif
 };
 
 #endif // QTCAMERA_H

@@ -4,6 +4,7 @@
 #include "capturethread.h"
 #include "camera.h"
 #include "webcam.h"
+#include "qglcanvas.h"
 
 QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -20,7 +21,12 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	QVBoxLayout *verticalLayout = new QVBoxLayout(centralWidget);
 	verticalLayout->setSpacing(6);
 	verticalLayout->setContentsMargins(0, 0, 0, 0);
+
+#ifdef USING_OPENGL
+	m_cameraView = new QGLCanvas(centralWidget);
+#else
 	m_cameraView = new QLabel(centralWidget);
+#endif	
 	
 	QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     sizePolicy.setHorizontalStretch(0);
@@ -28,7 +34,10 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
     sizePolicy.setHeightForWidth(m_cameraView->sizePolicy().hasHeightForWidth());
     m_cameraView->setSizePolicy(sizePolicy);
     m_cameraView->setMinimumSize(QSize(320, 240));
+
+#ifndef USING_OPENGL
     m_cameraView->setAlignment(Qt::AlignCenter);
+#endif
 
     verticalLayout->addWidget(m_cameraView);
 
@@ -114,7 +123,7 @@ void QtCamera::startVideo()
 	if (m_captureThread->startCapture(m_camera)) {
 		m_frameCount = 0;
 		m_frameRateTimer = startTimer(3000);
-		m_frameRefreshTimer = startTimer(20);
+		m_frameRefreshTimer = startTimer(30);
 		ui.actionStart->setEnabled(false);
 		ui.actionStop->setEnabled(true);
 	}
@@ -189,10 +198,20 @@ void QtCamera::showImage(Mat *frame)
 
 	if (m_scaling) {
 		QImage scaledImg = swappedImg.scaled(m_cameraView->size(), Qt::KeepAspectRatioByExpanding);
+#ifdef USING_OPENGL
+		m_cameraView->setImage(scaledImg);
+		m_cameraView->repaint();
+#else
 		m_cameraView->setPixmap(QPixmap::fromImage(scaledImg));
+#endif
 	}
 	else {
+#ifdef USING_OPENGL
+		m_cameraView->setImage(swappedImg);		
+		m_cameraView->repaint();
+#else
 		m_cameraView->setPixmap(QPixmap::fromImage(swappedImg));	
+#endif
 	}
 }
 
