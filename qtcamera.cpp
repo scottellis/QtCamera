@@ -119,12 +119,8 @@ void QtCamera::newImage(Mat *grab)
 	m_frameCount++;
 
 	if (m_frameQMutex.tryLock()) {
-		if (m_frameQ.empty()) {
-			Mat *copy = new Mat(*grab);
-
-			if (copy)
-				m_frameQ.enqueue(copy);
-		}
+		if (m_frameQ.empty())
+			m_frameQ.enqueue(new Mat(*grab));
 
 		m_frameQMutex.unlock();
 	}
@@ -140,13 +136,16 @@ void QtCamera::timerEvent(QTimerEvent *event)
 		m_pStatus->setText(fps);		
 	}
 	else {
+		Mat *frame = NULL;
+
 		m_frameQMutex.lock();
-		if (m_frameQ.empty()) {
-			m_frameQMutex.unlock();
-		}
-		else {
-			Mat *frame = m_frameQ.dequeue();
-			m_frameQMutex.unlock();
+
+		if (!m_frameQ.empty())
+			frame = m_frameQ.dequeue();
+
+		m_frameQMutex.unlock();
+
+		if (frame) {
 			showImage(frame);
 			delete frame;
 		}
