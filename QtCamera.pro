@@ -7,7 +7,7 @@ TARGET = QtCamera
 DESTDIR = ./
 QT += core gui
 CONFIG += release
-DEFINES += QT_LARGEFILE_SUPPORT
+DEFINES +=
 INCLUDEPATH += ./GeneratedFiles \
     ./GeneratedFiles/Release \
     . \
