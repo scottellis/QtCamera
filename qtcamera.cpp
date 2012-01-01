@@ -16,6 +16,25 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	m_frameRefreshTimer = 0;
 	m_camera = NULL;
 
+	QWidget *centralWidget = new QWidget(this);
+	QVBoxLayout *verticalLayout = new QVBoxLayout(centralWidget);
+	verticalLayout->setSpacing(6);
+	verticalLayout->setContentsMargins(0, 0, 0, 0);
+	m_cameraView = new QLabel(centralWidget);
+	
+	QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    sizePolicy.setHorizontalStretch(0);
+    sizePolicy.setVerticalStretch(0);
+    sizePolicy.setHeightForWidth(m_cameraView->sizePolicy().hasHeightForWidth());
+    m_cameraView->setSizePolicy(sizePolicy);
+    m_cameraView->setMinimumSize(QSize(320, 240));
+    m_cameraView->setAlignment(Qt::AlignCenter);
+
+    verticalLayout->addWidget(m_cameraView);
+
+    setCentralWidget(centralWidget);
+
+
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionStart, SIGNAL(triggered()), this, SLOT(startVideo()));
 	connect(ui.actionStop, SIGNAL(triggered()), this, SLOT(stopVideo()));
@@ -169,11 +188,11 @@ void QtCamera::showImage(Mat *frame)
 	QImage swappedImg = img.rgbSwapped();
 
 	if (m_scaling) {
-		QImage scaledImg = swappedImg.scaled(ui.cameraView->size(), Qt::KeepAspectRatioByExpanding);
-		ui.cameraView->setPixmap(QPixmap::fromImage(scaledImg));
+		QImage scaledImg = swappedImg.scaled(m_cameraView->size(), Qt::KeepAspectRatioByExpanding);
+		m_cameraView->setPixmap(QPixmap::fromImage(scaledImg));
 	}
 	else {
-		ui.cameraView->setPixmap(QPixmap::fromImage(swappedImg));	
+		m_cameraView->setPixmap(QPixmap::fromImage(swappedImg));	
 	}
 }
 

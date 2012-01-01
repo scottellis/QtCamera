@@ -44,6 +44,7 @@ private:
 	QLabel *m_pStatus;
 	int m_frameCount;
 	bool m_scaling;
+	QLabel *m_cameraView;
 };
 
 #endif // QTCAMERA_H
