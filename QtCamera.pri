@@ -8,9 +8,12 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./qtcamera.h \
-    ./capturethread.h
+    ./capturethread.h \
+    ./camera.h \
+    ./webcam.h
 SOURCES += ./capturethread.cpp \
     ./main.cpp \
-    ./qtcamera.cpp
+    ./qtcamera.cpp \
+    ./webcam.cpp
 FORMS += ./qtcamera.ui
 RESOURCES += qtcamera.qrc

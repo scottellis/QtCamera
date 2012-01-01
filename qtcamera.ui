@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>565</height>
+    <width>640</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="cameraView">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>0</x>
+      <y>0</y>
       <width>640</width>
       <height>480</height>
      </rect>
@@ -27,7 +27,7 @@
      <bool>false</bool>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
      <string>Image shown here</string>
@@ -42,7 +42,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>662</width>
+     <width>640</width>
      <height>21</height>
     </rect>
    </property>
@@ -50,12 +50,19 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuCamera">
+    <property name="title">
+     <string>Camera</string>
+    </property>
     <addaction name="actionStart"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
-    <addaction name="actionExit"/>
+    <addaction name="actionScale"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuCamera"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -93,6 +100,17 @@
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionScale">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Scaling</string>
    </property>
   </action>
  </widget>

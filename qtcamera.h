@@ -1,12 +1,14 @@
 #ifndef QTCAMERA_H
 #define QTCAMERA_H
 
-#include <QtGui/QMainWindow>
+#include <QtGui>
 #include "ui_qtcamera.h"
-#include "capturethread.h"
 
 #include <opencv2/opencv.hpp>
 using namespace cv;
+
+class Camera;
+class CaptureThread;
 
 class QtCamera : public QMainWindow
 {
@@ -21,23 +23,29 @@ public:
 public slots:
 	void startVideo();
 	void stopVideo();
+	void toggleScaling();
+	void newImage(Mat *grab);
 		
 protected:
 	void timerEvent(QTimerEvent *event);
+	void resizeEvent(QResizeEvent *event);
 
 private:
 	void showImage(Mat *frame);
-
-	CaptureThread *m_captureThread;
+	bool createCamera();
+	void clearQueue();
 
 	Ui::QtCameraClass ui;
-
-	QMutex m_grabFrameMutex;
-	QQueue <Mat> m_frameQueue;
+	CaptureThread *m_captureThread;
+	Camera *m_camera;
+	QMutex m_frameQMutex;
+	QQueue <Mat *> m_frameQ;
 	int m_frameRateTimer;
 	int m_frameRefreshTimer;
 	QLabel *m_pStatus;
+	int m_nonImgClientHeight;
 	int m_frameCount;
+	bool m_scaling;
 };
 
 #endif // QTCAMERA_H

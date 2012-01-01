@@ -2,37 +2,26 @@
 #define CAPTURETHREAD_H
 
 #include <QThread>
-#include <QtGui>
 
-#include <opencv2/opencv.hpp>
-using namespace cv;
-
-class QtCamera;
+#include "camera.h"
 
 class CaptureThread : public QThread
 {
     Q_OBJECT
 
 public:
-    CaptureThread(QtCamera *parent);
-	virtual ~CaptureThread();
-
-	bool connectCamera(int device);
-    void disconnectCamera();
-	bool isConnected();
-
-	bool startCapture();
+ 	bool startCapture(Camera *camera);
     void stopCapture();
-    bool isStopped() { return m_stopped; }
 
-private:
-	QtCamera *m_parent;
-    VideoCapture m_vidcap;
-    QMutex m_stopMutex;
-    volatile bool m_stopped;
+signals:
+	void newImage(Mat *grab);
 
 protected:
     void run();
+
+private:
+	Camera *m_camera;
+	volatile bool m_stop;
 };
 
 #endif // CAPTURETHREAD_H

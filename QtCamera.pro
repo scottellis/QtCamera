@@ -6,10 +6,10 @@ TEMPLATE = app
 TARGET = QtCamera
 DESTDIR = ./
 QT += core gui
-CONFIG += debug
-DEFINES +=
+CONFIG += release
+DEFINES += QT_LARGEFILE_SUPPORT
 INCLUDEPATH += ./GeneratedFiles \
-    ./GeneratedFiles/Debug \
+    ./GeneratedFiles/Release \
     . \
     $(OPENCV_INC_PATH)
 LIBS += -L"$(OPENCV_LIB_PATH)" \
@@ -19,8 +19,8 @@ LIBS += -L"$(OPENCV_LIB_PATH)" \
     -lopencv_imgproc
 PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
+MOC_DIR += ./GeneratedFiles/release
+OBJECTS_DIR += release
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(QtCamera.pri)

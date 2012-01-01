@@ -92,6 +92,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="qtcamera.cpp" />
+    <ClCompile Include="webcam.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qtcamera.h">
@@ -119,6 +120,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="webcam.h" />
     <CustomBuild Include="capturethread.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing capturethread.h...</Message>
@@ -129,6 +131,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB  "-I." "-I.\GeneratedFiles" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I." "-I$(OPENCV_INC_PATH)\." "-I." "-I." "-I." "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"</Command>
     </CustomBuild>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="GeneratedFiles\ui_qtcamera.h" />
   </ItemGroup>
   <ItemGroup>

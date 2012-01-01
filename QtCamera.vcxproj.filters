@@ -59,6 +59,9 @@
     <ClCompile Include="capturethread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="webcam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qtcamera.h">
@@ -77,6 +80,12 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_qtcamera.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="webcam.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
