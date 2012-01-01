@@ -19,8 +19,8 @@ public:
 	void setGrabFrame(Mat *frame);
 	
 public slots:
-		void startVideo();
-		void stopVideo();
+	void startVideo();
+	void stopVideo();
 		
 protected:
 	void timerEvent(QTimerEvent *event);
