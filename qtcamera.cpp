@@ -206,12 +206,10 @@ void QtCamera::showImage(Mat *frame)
 
 void QtCamera::clearQueue()
 {
-	Mat *p;
-
 	m_frameQMutex.lock();
 	
 	while (!m_frameQ.empty()) {
-		p = m_frameQ.dequeue();
+		Mat *p = m_frameQ.dequeue();
 		delete p;
 	}
 
