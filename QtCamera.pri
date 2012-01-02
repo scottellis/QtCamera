@@ -7,10 +7,10 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./qtcamera.h \
-    ./capturethread.h \
+HEADERS += ./webcam.h \
     ./camera.h \
-    ./webcam.h
+    ./qtcamera.h \
+    ./capturethread.h
 SOURCES += ./capturethread.cpp \
     ./main.cpp \
     ./qtcamera.cpp \
