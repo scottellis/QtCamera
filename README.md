@@ -1,20 +1,25 @@
   QtCamera
 =======
 
-A simple test framework for my first experiment with Qt beyond HelloWorld.
+A simple test framework for some Qt experimenting.
 
 The QtCamera.sln is a VisualStudio 2010 solution.
 
-The QtCamera.pro is for use with QtCreator, though I only tested with
-QtCreator on Linux.
+The QtCamera.pro is for use with QtCreator, though I really only tested 
+with QtCreator on Linux. It's would be silly not to use Visual Studio on 
+Windows since I already have it installed.
 
-The project uses Qt 4.8 built from source on Windows 7 32-bit and uses 
-Qt 4.7.1 on an Ubuntu 11.04 64-bit from the standard apt-get sources.
+I used Qt 4.8 built from source on the Windows 7 32-bit system. 
 
-The project uses OpenCV 2.3.1 built from source for both systems.
+I used Qt 4.7.1 from the standard apt-get sources on an Ubuntu 11.04 
+64-bit system.
 
-You can use the debugger to step through both OpenCV and Qt code which is 
-kind of cool. I'll write up some instructions for setting up the dev machines.
+OpenCV 2.3.1 was built from source on both systems.
+
+
+You can use the debugger to step through both OpenCV and Qt code which 
+is convenient. I'll write up some instructions for setting up the dev 
+machines since there were a lot of steps.
 
 
 I tested with two Logitech USB web cameras, a C510 and C910. Both cameras
