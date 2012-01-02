@@ -1,9 +1,5 @@
 #include "webcam.h"
 
-WebCam::WebCam()
-{
-}
-
 WebCam::~WebCam()
 {
 	close();
@@ -44,7 +40,5 @@ bool WebCam::getNextFrame(Mat *grab)
 // Always fixed using OpenCV interface to USB webcams
 QSize WebCam::getImageSize()
 {
-	QSize sz(640, 480);
-
-	return sz;
+	return QSize(640, 480);
 }
