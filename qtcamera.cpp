@@ -23,16 +23,16 @@ QtCamera::QtCamera(QWidget *parent, Qt::WFlags flags)
 	m_cameraView = new QLabel(centralWidget);
 	
 	QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(m_cameraView->sizePolicy().hasHeightForWidth());
-    m_cameraView->setSizePolicy(sizePolicy);
-    m_cameraView->setMinimumSize(QSize(320, 240));
-    m_cameraView->setAlignment(Qt::AlignCenter);
+	sizePolicy.setHorizontalStretch(0);
+	sizePolicy.setVerticalStretch(0);
+	sizePolicy.setHeightForWidth(m_cameraView->sizePolicy().hasHeightForWidth());
+	m_cameraView->setSizePolicy(sizePolicy);
+	m_cameraView->setMinimumSize(QSize(320, 240));
+	m_cameraView->setAlignment(Qt::AlignCenter);
 
-    verticalLayout->addWidget(m_cameraView);
+	verticalLayout->addWidget(m_cameraView);
 
-    setCentralWidget(centralWidget);
+	setCentralWidget(centralWidget);
 
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -90,13 +90,16 @@ bool QtCamera::createCamera()
 void QtCamera::startVideo()
 {
 	if (!m_camera) {
-		if (!createCamera())
+		if (!createCamera()) {
+			QMessageBox::warning(this, "QtCamera", "Error allocating camera", QMessageBox::Ok);
 			return;
+		}
 	}
 
 	if (!m_camera->open(0)) {
 		delete m_camera;
 		m_camera = NULL;
+		QMessageBox::warning(this, "QtCamera", "Error opening camera", QMessageBox::Ok);
 		return;
 	}
 
@@ -105,8 +108,10 @@ void QtCamera::startVideo()
 	if (!m_captureThread) {
 		m_captureThread = new CaptureThread();
 
-		if (!m_captureThread)
+		if (!m_captureThread) {
+			QMessageBox::warning(this, "QtCamera", "Error allocating capture thread", QMessageBox::Ok);
 			return;
+		}
 	}
 
 	connect(m_captureThread, SIGNAL(newImage(Mat *)), this, SLOT(newImage(Mat *)), Qt::DirectConnection);
@@ -117,6 +122,9 @@ void QtCamera::startVideo()
 		m_frameRefreshTimer = startTimer(20);
 		ui.actionStart->setEnabled(false);
 		ui.actionStop->setEnabled(true);
+	}
+	else {
+		QMessageBox::warning(this, "QtCamera", "Error starting capture thread", QMessageBox::Ok);
 	}
 }
 
