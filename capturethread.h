@@ -10,8 +10,8 @@ class CaptureThread : public QThread
     Q_OBJECT
 
 public:
- 	bool startCapture(Camera *camera);
-    void stopCapture();
+	bool startCapture(Camera *camera);
+	void stopCapture();
 
 signals:
 	void newImage(Mat *grab);
