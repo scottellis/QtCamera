@@ -28,14 +28,14 @@ void CaptureThread::run()
 {
 	Mat grab;
 
-    while (!m_stop) {
+	while (!m_stop) {
 		if (!m_camera->getNextFrame(&grab)) {
 			msleep(10);
 			continue;
 		}
 
 		emit newImage(&grab);
-    }
+	}
 
 	m_camera->stopCapture();
 }

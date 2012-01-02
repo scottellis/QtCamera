@@ -7,7 +7,7 @@
 
 class CaptureThread : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
 	bool startCapture(Camera *camera);
@@ -17,7 +17,7 @@ signals:
 	void newImage(Mat *grab);
 
 protected:
-    void run();
+	void run();
 
 private:
 	Camera *m_camera;
