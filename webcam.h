@@ -3,13 +3,10 @@
 
 #include "camera.h"
 
-#include <opencv2/opencv.hpp>
-using namespace cv;
-
 class WebCam : public Camera
 {
 public:
-	WebCam();
+	WebCam() {}
 	virtual ~WebCam();
 
 	virtual bool open(int device);
