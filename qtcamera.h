@@ -17,8 +17,6 @@ class QtCamera : public QMainWindow
 public:
 	QtCamera(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~QtCamera();
-
-	void setGrabFrame(Mat *frame);
 	
 public slots:
 	void startVideo();
