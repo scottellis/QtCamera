@@ -6,8 +6,7 @@ A simple test framework for some Qt experimenting.
 The QtCamera.sln is a VisualStudio 2010 solution.
 
 The QtCamera.pro is for use with QtCreator, though I really only tested 
-with QtCreator on Linux. It's would be silly not to use Visual Studio on 
-Windows since I already have it installed.
+with QtCreator on Linux. 
 
 I used Qt 4.8 built from source on the Windows 7 32-bit system. 
 
