@@ -22,7 +22,7 @@ public slots:
 	void startVideo();
 	void stopVideo();
 	void toggleScaling();
-	void newImage(Mat *grab);
+	void newImage(Mat grab);
 		
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -36,7 +36,7 @@ private:
 	CaptureThread *m_captureThread;
 	Camera *m_camera;
 	QMutex m_frameQMutex;
-	QQueue <Mat *> m_frameQ;
+	QQueue <Mat> m_frameQ;
 	int m_frameRateTimer;
 	int m_frameRefreshTimer;
 	QLabel *m_pStatus;

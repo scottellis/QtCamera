@@ -14,7 +14,7 @@ public:
 	void stopCapture();
 
 signals:
-	void newImage(Mat *grab);
+	void newImage(Mat grab);
 
 protected:
 	void run();

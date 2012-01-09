@@ -34,7 +34,7 @@ void CaptureThread::run()
 			continue;
 		}
 
-		emit newImage(&grab);
+		emit newImage(grab);
 	}
 
 	m_camera->stopCapture();

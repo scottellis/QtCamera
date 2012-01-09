@@ -114,7 +114,7 @@ void QtCamera::startVideo()
 		}
 	}
 
-	connect(m_captureThread, SIGNAL(newImage(Mat *)), this, SLOT(newImage(Mat *)), Qt::DirectConnection);
+	connect(m_captureThread, SIGNAL(newImage(Mat)), this, SLOT(newImage(Mat)), Qt::DirectConnection);
 
 	if (m_captureThread->startCapture(m_camera)) {
 		m_frameCount = 0;
@@ -131,7 +131,7 @@ void QtCamera::startVideo()
 void QtCamera::stopVideo()
 {
 	if (m_captureThread) {
-		disconnect(m_captureThread, SIGNAL(newImage(Mat *)), this, SLOT(newImage(Mat *)));
+		disconnect(m_captureThread, SIGNAL(newImage(Mat)), this, SLOT(newImage(Mat)));
 		m_captureThread->stopCapture();			
 	}
 
@@ -149,13 +149,13 @@ void QtCamera::stopVideo()
 	ui.actionStart->setEnabled(true);
 }
 
-void QtCamera::newImage(Mat *grab)
+void QtCamera::newImage(Mat grab)
 {
 	m_frameCount++;
 
 	if (m_frameQMutex.tryLock()) {
 		if (m_frameQ.empty())
-			m_frameQ.enqueue(new Mat(*grab));
+			m_frameQ.enqueue(grab);
 
 		m_frameQMutex.unlock();
 	}
@@ -171,7 +171,7 @@ void QtCamera::timerEvent(QTimerEvent *event)
 		m_pStatus->setText(fps);		
 	}
 	else {
-		Mat *frame = NULL;
+		Mat frame;
 
 		m_frameQMutex.lock();
 
@@ -180,10 +180,8 @@ void QtCamera::timerEvent(QTimerEvent *event)
 
 		m_frameQMutex.unlock();
 
-		if (frame) {
-			showImage(frame);
-			delete frame;
-		}
+		if (!frame.empty())
+			showImage(&frame);
 	}
 }
 
@@ -207,11 +205,6 @@ void QtCamera::showImage(Mat *frame)
 void QtCamera::clearQueue()
 {
 	m_frameQMutex.lock();
-	
-	while (!m_frameQ.empty()) {
-		Mat *p = m_frameQ.dequeue();
-		delete p;
-	}
-
+	m_frameQ.clear();
 	m_frameQMutex.unlock();
 }
